@@ -15,6 +15,17 @@ class BlackJack extends Applet {
 		
 	}
 
+	public boolean playersTurn(){
+
+		if (this.player.totalValue() <= 21) {
+			//check for draw
+			//this.player.draw();
+			//else check for fold
+			//return true;
+		}
+		return false;
+	}
+
 	public void paint(Graphics g) {
 	//	int count = 0;
 	//	for (int i = 0; i<4; i++) {
