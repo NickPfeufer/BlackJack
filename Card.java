@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 
 
-class Card {
+public class Card {
 	private int cardValue, x , y;
 	private boolean side;
 	private boolean drawn;

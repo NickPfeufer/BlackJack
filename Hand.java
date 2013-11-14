@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-class Hand {
+public class Hand {
 	private Card[] cards = new Card[12];
 	private Deck deck;
 	private int inHand;
@@ -27,10 +27,11 @@ class Hand {
 
 	public void draw(){
 		this.cards[this.inHand] = this.deck.draw();
+		this.inHand++;
 	}
 
 	public void printValue(){
-		for (int i = 0; i<12; i++) {
+		for (int i = 0; i<this.inHand(); i++) {
 			System.out.println(this.cards[i].value());
 		}
 	}

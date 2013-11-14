@@ -15,7 +15,7 @@ public class testDrawApplet extends Applet {
 		int count = 0;
 		for (int i = 0; i<4; i++) {
 			for (int j = 0; j<13; j++) {
-				cards[count].draw(g, new Rectangle((j+1)*100, (i+1)*100, 50, 75));
+				cards[count].draw(g, new Rectangle((j+1)*100, (i+1)*100, 100, 150));
 				count++;
 			}
 		}
@@ -23,7 +23,7 @@ public class testDrawApplet extends Applet {
 		count = 0;
 		for (int i = 0; i<4; i++) {
 			for (int j = 0; j<13; j++) {
-				cards[count].draw(g, new Rectangle((j+1)*100, (i+5)*100, 50, 75));
+				cards[count].draw(g, new Rectangle((j+1)*100, (i+5)*100, 100, 150));
 				count++;
 			}
 		}		
