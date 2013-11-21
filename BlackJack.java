@@ -1,27 +1,53 @@
 import java.awt.*;
 import java.applet.*;
 
+import java.awt.event.*;
+import javax.swing.*;
+
+
 public class BlackJack extends Applet {
 	private Deck deck;
+	private Card[] cards;
+
 	private Player player;
 	private Player ai;
-	private Card[] cards;
+	private boolean aiCanPlay;
+
+
 	private int outcome;
+	private ButtonPannel pannel;
+
+
 
 	public void init() {
 		this.deck = new Deck();
+		this.pannel = new ButtonPannel(this);
 		play();
 
 
 		
 	}
 
+	public boolean aiCanPlay(){
+		return this.aiCanPlay;
+	}
+	public int totalValue(){
+		return this.player.totalValue();
+	}
+
+
+
+
 	public void play(){
+		this.aiCanPlay = true;
 		this.outcome = 3;
 		this.deck.shuffle();
 		this.player = new Player(deck, 50);
 		this.ai = new Dealer(deck, 450);
-		boolean p = playersTurn();
+		System.out.println("initilized");
+		repaint();
+	}
+	public void endTurn(boolean p){
 		boolean a = aiTurn();
 		repaint();		
 		if (p && a) {
@@ -32,23 +58,28 @@ public class BlackJack extends Applet {
 			this.outcome = 1;
 		}else{
 			this.outcome = 2;
-		}
-
+		}		
 	}
 
-	public boolean playersTurn(){
-
-		while(this.player.totalValue() <= 21) {
+	//public boolean playersTurn(){
+	//	repaint();
+	//	while(this.player.totalValue() <= 21) {
 			//check for draw
-			this.player.draw();
-			repaint();
-			//else check for fold
-			//return true;
-			//this.paint
-		}
-		return false;
-	}
+	//		if (playersChoice == 1) {
+	//			this.player.draw();
+			//	repaint();
+			//	playersChoice = 0;		
+	//		}else if (playersChoice == 2) {
+			//	playersChoice = 0;
+			//	repaint();
+			//	return true;
+	//		}
+	//	}
+	//	playersChoice = 0;
+	//	return false;
+	//}
 	public boolean aiTurn(){
+		aiCanPlay = false;
 		this.ai.turn();
 		while (this.ai.totalValue()<17) {
 			this.ai.draw();
@@ -58,7 +89,8 @@ public class BlackJack extends Applet {
 			return true;
 		}else {
 			return false;
-		}
+		}		
+
 		
 	}
 
@@ -94,6 +126,10 @@ public class BlackJack extends Applet {
 		}
 	}
 
+	public void draw(){
+		this.player.draw();
+	}
+
 	public void paint(Graphics g) {
 		g.setColor(Color.white);
 		g.fillRect(0, 0, 4000, 3000);
@@ -119,4 +155,4 @@ public class BlackJack extends Applet {
 	//		}
 	//	}		
 	}
-}
+} 
