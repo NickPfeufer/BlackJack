@@ -18,7 +18,7 @@ class ButtonPannel extends JPanel implements ActionListener {
 		draw.addActionListener(this);
 		this.add(draw);
 
-		title = "Fold";
+		title = "Stay";
 		fold = new JButton(title);
 		fold.setActionCommand(title);
 		fold.addActionListener(this);
@@ -39,7 +39,7 @@ class ButtonPannel extends JPanel implements ActionListener {
 				jack.endTurn(false);
 			}	
 
-		}else if ("Fold".equals(ae.getActionCommand())) {
+		}else if ("Stay".equals(ae.getActionCommand())) {
 			if (jack.totalValue() <= 21 && jack.aiCanPlay()) {
 				jack.endTurn(true);
 			}else if (jack.aiCanPlay()) {

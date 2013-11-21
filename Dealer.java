@@ -32,7 +32,11 @@ public class Dealer extends Player {
 			g.drawImage(this.image, 150, this.offset, 200, 300, null);
 		}
 	}
-	
+	public void drawScore(Graphics g){
+		if (this.play) {
+			super.drawScore(g);
+		}
+	}
 
 	private static Image loadImage(){
 		String path = null;
