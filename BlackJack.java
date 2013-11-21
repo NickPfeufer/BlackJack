@@ -22,6 +22,7 @@ public class BlackJack extends Applet {
 	public void init() {
 		this.deck = new Deck();
 		this.pannel = new ButtonPannel(this);
+		this.add(this.pannel);
 		play();
 
 
@@ -33,6 +34,9 @@ public class BlackJack extends Applet {
 	}
 	public int totalValue(){
 		return this.player.totalValue();
+	}
+	public void reset(){
+		play();
 	}
 
 
@@ -128,17 +132,23 @@ public class BlackJack extends Applet {
 
 	public void draw(){
 		this.player.draw();
+		repaint();
+		if (aiCanPlay && this.player.totalValue() > 21) {
+			endTurn(false);
+		}
 	}
 
 	public void paint(Graphics g) {
+
 		g.setColor(Color.white);
-		g.fillRect(0, 0, 4000, 3000);
+		g.fillRect(0, 0, 1000, 1000);
 		this.player.paint(g);
 		this.ai.paint(g);
 
 		g.setFont(new Font("Serif", Font.BOLD, 30));
 		g.setColor(Color.blue);
 		g.drawString(victoryString(), 100, 400);
+		super.paint(g);			
 	//	int count = 0;
 	//	for (int i = 0; i<4; i++) {
 	//		for (int j = 0; j<13; j++) {

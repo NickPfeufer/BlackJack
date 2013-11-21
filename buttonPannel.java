@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
-class ButtonPannel extends JButton implements ActionListener {
-	private JButton draw, fold;
+class ButtonPannel extends JPanel implements ActionListener {
+	private JButton draw, fold, reset;
 	private BlackJack jack;
 
 	public ButtonPannel(BlackJack a){
@@ -23,6 +23,12 @@ class ButtonPannel extends JButton implements ActionListener {
 		fold.setActionCommand(title);
 		fold.addActionListener(this);
 		this.add(fold);
+
+		title = "New game";
+		reset = new JButton(title);
+		reset.setActionCommand(title);
+		reset.addActionListener(this);
+		this.add(reset);		
 	}
 
 	public void actionPerformed(ActionEvent ae){
@@ -39,7 +45,10 @@ class ButtonPannel extends JButton implements ActionListener {
 			}else if (jack.aiCanPlay()) {
 				jack.endTurn(false);
 			}
+		}else if ("New game".equals(ae.getActionCommand())) {
+			jack.reset();
 		}
 
-	}	
+	}
+	
 }
