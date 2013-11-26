@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 
 public class Dealer extends Player {
-
+// I noticed that I would be writing a lot of code more than once, so I extended player
 
 	private boolean play = false;
 	private Image image;
@@ -33,6 +33,7 @@ public class Dealer extends Player {
 		}
 	}
 	public void drawScore(Graphics g){
+		//only draws score if the AI has gone
 		if (this.play) {
 			super.drawScore(g);
 		}

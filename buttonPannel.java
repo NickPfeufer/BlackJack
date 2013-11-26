@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.awt.*;
 
 class ButtonPannel extends JPanel implements ActionListener {
-	private JButton draw, fold, reset;
+	private JButton draw, fold, reset, down;
 	private BlackJack jack;
 
 	public ButtonPannel(BlackJack a){
@@ -28,7 +28,13 @@ class ButtonPannel extends JPanel implements ActionListener {
 		reset = new JButton(title);
 		reset.setActionCommand(title);
 		reset.addActionListener(this);
-		this.add(reset);		
+		this.add(reset);
+
+		title = "Double Down";
+		down = new JButton(title);
+		down.setActionCommand(title);
+		down.addActionListener(this);
+		this.add(down);				
 	}
 
 	public void actionPerformed(ActionEvent ae){
@@ -47,6 +53,8 @@ class ButtonPannel extends JPanel implements ActionListener {
 			}
 		}else if ("New game".equals(ae.getActionCommand())) {
 			jack.reset();
+		}else if ("Double Down".equals(ae.getActionCommand())) {
+			jack.doubleDown();
 		}
 
 	}

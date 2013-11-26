@@ -16,17 +16,34 @@ public class BlackJack extends Applet {
 
 	private int outcome;
 	private ButtonPannel pannel;
+	private BettingPannel betpannel;
 
+	private int bet, chips;
+	private boolean betting = true;
 
 
 	public void init() {
 		this.deck = new Deck();
-		this.pannel = new ButtonPannel(this);
-		this.add(this.pannel);
-		play();
+		//-test-
+
+		chips = 100;
+		bet = 1;
+		//-test-
+		betplay();
 
 
 		
+	}
+	public void doubleDown(){
+		aiCanPlay = false;
+		this.ai.turn();
+		bet *= 2;
+		draw();
+		if (this.player.totalValue() > 21) {
+			endTurn(false);
+		}else{
+			endTurn(true);
+		}
 	}
 
 	public boolean aiCanPlay(){
@@ -36,20 +53,60 @@ public class BlackJack extends Applet {
 		return this.player.totalValue();
 	}
 	public void reset(){
-		play();
+		this.remove(this.pannel);
+		betplay();
+	}
+
+	public void betplay(){
+		this.betpannel = new BettingPannel(this);
+		this.add(this.betpannel);
+		betting = true;
+		bet = 1;
+		chips--;
+		validate();
+		repaint();
+	}
+
+	public void betMore(){
+		if (chips > 0) {
+			bet++;
+			chips--;
+			repaint();
+		}
+	}
+	public void betLess(){
+		if (bet > 1) {
+			bet--;
+			chips++;
+			repaint();
+		}
 	}
 
 
 
-
 	public void play(){
-		this.aiCanPlay = true;
-		this.outcome = 3;
-		this.deck.shuffle();
-		this.player = new Player(deck, 50);
-		this.ai = new Dealer(deck, 450);
-		System.out.println("initilized");
-		repaint();
+		if (chips == -1) {
+			chips = 100;
+			this.remove(this.betpannel);
+			reset();
+		}else{
+			this.remove(this.betpannel);			
+			betting = false;
+		//-test-
+
+			this.pannel = new ButtonPannel(this);
+			this.add(this.pannel);		
+		//-test-
+			this.aiCanPlay = true;
+			this.outcome = 3;
+			this.deck.shuffle();
+			this.player = new Player(deck, 50);
+			this.ai = new Dealer(deck, 450);
+			System.out.println("initilized");
+			validate();
+			repaint();			
+		}
+
 	}
 	public void endTurn(boolean p){
 		boolean a = aiTurn();
@@ -83,17 +140,21 @@ public class BlackJack extends Applet {
 	//	return false;
 	//}
 	public boolean aiTurn(){
-		aiCanPlay = false;
-		this.ai.turn();
-		while (this.ai.totalValue()<17) {
-			this.ai.draw();
-			repaint();			
+		if(aiCanPlay){
+			aiCanPlay = false;
+			this.ai.turn();
+			while (this.ai.totalValue()<17) {
+				this.ai.draw();
+				repaint();			
+			}	
 		}
+
 		if (this.ai.totalValue()<=21) {
 			return true;
 		}else {
 			return false;
-		}		
+		}
+
 
 		
 	}
@@ -120,10 +181,16 @@ public class BlackJack extends Applet {
 	}
 	public String victoryString(){
 		if (this.outcome == 0) {
+			chips += 2*bet;	
+			bet = 0;
 			return "Victory";
+
 		}else if (this.outcome == 1) {
+			bet = 0;
 			return "Loss";
 		}else if (this.outcome == 2) {
+			chips += bet;
+			bet = 0;
 			return "Draw";
 		}else{
 			return "";
@@ -139,30 +206,31 @@ public class BlackJack extends Applet {
 	}
 
 	public void paint(Graphics g) {
-
 		g.setColor(Color.white);
-		g.fillRect(0, 0, 1000, 1000);
-		this.player.paint(g);
-		this.ai.paint(g);
-
+		g.fillRect(0, 0, 1000, 1000);		
 		g.setFont(new Font("Serif", Font.BOLD, 30));
-		g.setColor(Color.blue);
-		g.drawString(victoryString(), 100, 400);
-		super.paint(g);			
-	//	int count = 0;
-	//	for (int i = 0; i<4; i++) {
-	//		for (int j = 0; j<13; j++) {
-	//			cards[count].draw(g, new Rectangle((j+1)*100, (i+1)*100, 50, 75));
-	//			count++;
-	//		}
-	//	}
-	//	deck.shuffle();
-	//	count = 0;
-	//	for (int i = 0; i<4; i++) {
-	//		for (int j = 0; j<13; j++) {
-	//			cards[count].draw(g, new Rectangle((j+1)*100, (i+5)*100, 50, 75));
-	//			count++;
-	//		}
-	//	}		
+		g.setColor(Color.red);
+		if (betting) {
+			if (chips == -1) {
+				System.out.println("too few chips");
+				g.drawString("You are out of chips, press play to continue", 100, 400);
+			}else{
+				System.out.println("draw strings");
+				g.drawString("You have "+chips+" chips left in the pot", 50, 300);
+				g.drawString("You are betting "+bet+" chip(s). You must bet at least one.", 50, 500);
+			}
+		}else{
+			this.player.paint(g);
+			this.ai.paint(g);
+
+
+			g.setColor(Color.blue);
+			g.drawString(victoryString(), 100, 400);							
+		}
+		super.paint(g);
+
+
+		
+		
 	}
 } 
