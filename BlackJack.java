@@ -35,6 +35,7 @@ public class BlackJack extends Applet {
 		
 	}
 	public void doubleDown(){
+		//auto ends aiturn without playing and draws another for the player, doubling bet
 		aiCanPlay = false;
 		this.ai.turn();
 		bet *= 2;
@@ -47,17 +48,21 @@ public class BlackJack extends Applet {
 	}
 
 	public boolean aiCanPlay(){
+		//a lot of stuff depends on the ai going or not going
 		return this.aiCanPlay;
 	}
 	public int totalValue(){
+		//gets the total value of the hand
 		return this.player.totalValue();
 	}
 	public void reset(){
+		//resets the game
 		this.remove(this.pannel);
 		betplay();
 	}
 
 	public void betplay(){
+		// stuff for betting
 		this.betpannel = new BettingPannel(this);
 		this.add(this.betpannel);
 		betting = true;
@@ -85,6 +90,7 @@ public class BlackJack extends Applet {
 
 
 	public void play(){
+		//they can't play if they don't have chips
 		if (chips == -1) {
 			chips = 100;
 			this.remove(this.betpannel);
@@ -109,6 +115,7 @@ public class BlackJack extends Applet {
 
 	}
 	public void endTurn(boolean p){
+		//this is were I check victory conditions
 		boolean a = aiTurn();
 		repaint();		
 		if (p && a) {
@@ -140,6 +147,7 @@ public class BlackJack extends Applet {
 	//	return false;
 	//}
 	public boolean aiTurn(){
+		//dealers brain, draw to 17
 		if(aiCanPlay){
 			aiCanPlay = false;
 			this.ai.turn();
@@ -160,6 +168,7 @@ public class BlackJack extends Applet {
 	}
 
 	public int victory(){
+		//more victory condition code
 		if ((21 - this.ai.totalValue()) > (21 - this.player.totalValue())) {
 			return 0;
 		}else if ((21 - this.ai.totalValue()) < (21 - this.player.totalValue())) {
@@ -180,6 +189,8 @@ public class BlackJack extends Applet {
 
 	}
 	public String victoryString(){
+		//seperate this out, I added the chip handling here because 
+		//the if statements I needed were already implimited
 		if (this.outcome == 0) {
 			chips += 2*bet;	
 			bet = 0;
@@ -198,6 +209,7 @@ public class BlackJack extends Applet {
 	}
 
 	public void draw(){
+		//tells the player to draw a card and ends their turn if they break
 		this.player.draw();
 		repaint();
 		if (aiCanPlay && this.player.totalValue() > 21) {
@@ -206,10 +218,12 @@ public class BlackJack extends Applet {
 	}
 
 	public void paint(Graphics g) {
+		//background
 		g.setColor(Color.white);
 		g.fillRect(0, 0, 1000, 1000);		
 		g.setFont(new Font("Serif", Font.BOLD, 30));
 		g.setColor(Color.red);
+		//don't show cards until they bet
 		if (betting) {
 			if (chips == -1) {
 				System.out.println("too few chips");

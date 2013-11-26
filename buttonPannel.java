@@ -7,6 +7,8 @@ class ButtonPannel extends JPanel implements ActionListener {
 	private BlackJack jack;
 
 	public ButtonPannel(BlackJack a){
+		//I tell the pannel what blackjack it is a part of so it can 
+		//call functions I write in blackjack
 		this.jack = a;
 		setUpbuttons();
 	}

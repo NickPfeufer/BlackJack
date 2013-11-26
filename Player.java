@@ -45,7 +45,7 @@ public class Player {
 
 
 		for (int i = 0; i<inHand(); i++) {
-
+			// creats an array of rectangles to draw the cards in
 			recs[i] = new Rectangle(x,this.offset, 200, 300);
 			x+=100;
 		}

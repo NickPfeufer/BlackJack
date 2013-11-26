@@ -60,6 +60,7 @@ public class Hand {
 	}
 
 	public void paint(Graphics g, Rectangle[] r){
+		//uses an array of rectangles to draw the cards
 		for (int i = 0 ; i<this.inHand; i++) {
 			cards[i].draw(g, r[i]);
 		}

@@ -60,6 +60,8 @@ public class Deck {
 
 
 	public Card draw(){
+		//checks if a cards been drawn, then tells the card it draws
+		//that the card has been drawn from the deck
 		for (int i = 0; i<52 ; i++) {
 			if (!cards[i].drawn()) {
 				cards[i].pull();
@@ -72,6 +74,7 @@ public class Deck {
 	public void shuffle(){
 		for (int j = 0; j<52; j++) {
 			cards[j].push();
+			//tells all the cards that they are in the deck again
 		}
 
 
@@ -93,6 +96,7 @@ public class Deck {
 
 
 	public static void main(String[] args) {
+		//testing code
 		Deck bob = new Deck();
 		bob.printValue();
 		bob.shuffle();

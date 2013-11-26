@@ -62,7 +62,7 @@ public class Card {
 	public void setY(int y){
 		this.y = y;
 	}
-
+	//each card knows its own image and if its been drawn from the deck
 	private static Image loadImage(String name){
 		String path = null;
 		Image image = null;

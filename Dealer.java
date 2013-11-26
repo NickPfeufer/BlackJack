@@ -40,6 +40,7 @@ public class Dealer extends Player {
 	}
 
 	private static Image loadImage(){
+		//loads the back of the card image to cover the dealers second card
 		String path = null;
 		Image image = null;
 
